@@ -1,0 +1,8 @@
+resources:
+  public_road:
+    kind: public_road
+    id: public_road
+
+  private_road:
+    kind: private_road
+    id: private_road

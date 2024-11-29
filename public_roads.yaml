@@ -1,0 +1,60 @@
+apiVersion: api.cerbos.dev/v1
+resourcePolicy:
+  resource: public_road
+  version: default
+  rules:
+    - actions:
+        - drive:moto
+      effect: EFFECT_ALLOW
+      roles:
+        - licensed
+      condition:
+        match:
+          expr: >
+            "moto" in P.attr.vehicle
+
+    - actions:
+        - drive:car
+      effect: EFFECT_ALLOW
+      roles:
+        - licensed
+      condition:
+        match:
+          expr: >
+            "car" in P.attr.vehicle
+
+    - actions:
+        - drive:truck
+      effect: EFFECT_ALLOW
+      roles:
+        - licensed
+      condition:
+        match:
+          expr: >
+            "truck" in P.attr.vehicle
+
+    - actions:
+        - learn
+      effect: EFFECT_ALLOW
+      roles:
+        - licensed
+        - unlicensed
+      condition:
+        match:
+          expr: P.attr.age >= 16
+
+    # Is there a way to make this dynanmic so that we don't have to write a bunch?
+    # i.e. match action teach:%s with the conditional
+    - actions:
+        - teach:moto
+      effect: EFFECT_ALLOW
+      roles:
+        - instructor
+      condition:
+        match:
+          all:
+            of:
+              - expr: >
+                  "moto" in P.attr.vehicle
+              - expr: >
+                  "moto" in P.attr.instructor

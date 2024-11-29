@@ -1,0 +1,31 @@
+principals:
+  natalie:
+    id: natalie
+    roles:
+      - licensed
+    attr:
+      vehicle: [moto, car]
+      age: 40
+
+  jean:
+    id: jean
+    roles:
+      - unlicensed
+    attr:
+      age: 16
+
+  ara:
+    id: ara
+    roles:
+      - unlicensed
+    attr:
+      age: 14
+
+  hugo:
+    id: hugo
+    roles:
+      - licensed
+      - instructor
+    attr:
+      vehicle: [moto, car, truck]
+      instructor: [moto, car]

@@ -1,0 +1,95 @@
+name: tests
+
+principals:
+  natalie:
+    id: natalie
+    roles:
+      - licensed
+    attr:
+      vehicle: [moto, car]
+  jean:
+    id: jean
+    roles:
+      - unlicensed
+  hugo:
+    id: hugo
+    roles:
+      - licensed
+      - instructor
+    attr:
+      vehicle: [moto, car, truck]
+      instructor: [moto, car]
+
+
+resources:
+  public_road:
+    kind: public_road
+    id: public_road
+  private_road:
+    kind: private_road
+    id: private_road
+
+
+tests:
+  - name: drive a car on public roads
+    input:
+      principals:
+        - natalie
+        - jean
+      resources:
+        - public_road
+      actions:
+        - drive:car
+    expected:
+      - principal: natalie
+        resource: public_road
+        actions:
+          drive:car: EFFECT_ALLOW
+      - principal: jean
+        resource: public_road
+        actions:
+          drive:car: EFFECT_DENY
+
+  - name: drive a truck on public roads
+    input:
+      principals:
+        - natalie
+        - jean
+        - hugo
+      resources:
+        - public_road
+      actions:
+        - drive:truck
+    expected:
+        - principal: hugo
+          resource: public_road
+          actions:
+            drive:truck: EFFECT_ALLOW
+
+  - name: drive on private roads
+    input:
+      principals:
+        - jean
+      resources:
+        - private_road
+      actions:
+        - drive:car
+    expected:
+      - principal: jean
+        resource: private_road
+        actions:
+          drive:car: EFFECT_ALLOW
+
+  - name: teach moto on public roads
+    input:
+      principals:
+        - hugo
+      resources:
+        - public_road
+      actions:
+        - teach:moto
+    expected:
+      - principal: hugo
+        resource: public_road
+        actions:
+          teach:moto: EFFECT_ALLOW

@@ -1,0 +1,24 @@
+apiVersion: api.cerbos.dev/v1
+resourcePolicy:
+  resource: private_road
+  version: default
+  rules:
+    - actions:
+        - drive:car
+        - drive:moto
+        - drive:truck
+        - learn
+      effect: EFFECT_ALLOW
+      roles:
+        - licensed
+        - unlicensed
+      output:
+        when:
+          ruleActivated: |-
+            "Private roads are lawless places—beware!"
+
+    - actions:
+        - teach
+      effect: EFFECT_ALLOW
+      roles:
+        - instructor
